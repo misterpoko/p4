@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sstream>
 #include <string>
-#include "DoublyLinkedList.h"
+#include "BinaryTree.h"
 
 using namespace std;
 int main(int argc, char *argv[]) 
@@ -12,16 +12,16 @@ int main(int argc, char *argv[])
 	string userSelect; 
 	char userSelectChar,listType;
 	bool exit = false;
-	string subLine, upperBound, lowerBound;
+	string subLine;
 	int valueOfInt;
 	float valueOfFloat;
 	bool check = true;
 	char caseI = 'i';
 	char caseF = 'f';
 	char caseS = 's';
-	DoublyLinkedList<int> listy;
-	DoublyLinkedList<float> listy2;
-	DoublyLinkedList<string> listy3;
+	BinaryTree<int> listy;
+	BinaryTree<float> listy2;
+	BinaryTree<string> listy3;
 	ifstream inFile;
 	
 	cout << "Enter list type(i - int, f - float, s - std:string): ";
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 					cout << "Input doesnt match file type.  Quitting..." << endl;
 					return 1;
 				}//catch 
-				listy.insertItem(valueOfInt);
+				// insert method
 			} // while
 			cout << endl;
 		}//if 
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 					cout << "Input doesnt match file type. Quitting..." << endl;
 					return 1;
 				}//catch
-				listy2.insertItem(valueOfFloat);
+				// insert method
 			}//while 
 			cout << endl;
 		}//if 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 			}//if
 			while (getline(inFile, subLine,' '))//Gets each variable until it hits a space or EOF
 			{
-				listy3.insertItem(subLine);
+				//insert method
 			}//while
 			cout << endl;
 		}//if
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 		}//else
 	}
 	inFile.close(); //close inFile no longer needed.
-	cout << "Command Options \ninsert (i), delete (d), length (l), print (p), deleteSub (b), mode (m), printReverse(r), swapAtl(s), quit (q)"<< endl;
+	cout << "Command Options \ninsert (i), delete (d), retrieve (r), length (l), in-order (n), pre-order (p), post-order (o), getNumSingleParent (s), getNumLeafNodes (f), getSumOfSubtrees (t), quit (q)"<< endl;
 	while (exit == false) //Loop until user enders q
 	{
 		cout << "Enter a Command: ";
@@ -120,170 +120,38 @@ int main(int argc, char *argv[])
 
 		switch (userSelectChar)
 			{
-			case 'i': //Insert
-					cout<< "Enter Item to insert: ";
-					cin >> userSelect; 
-					if(caseI == listType)
-					{
-						valueOfInt = stoi(userSelect);
-						listy.insertItem(valueOfInt);
-						listy.print();
-					}//if
-					else if(caseF ==listType)
-					{
-						valueOfFloat = stof(userSelect);
-						listy2.insertItem(valueOfFloat);
-						listy2.print();
-					}//if
-					else
-					{
-						listy3.insertItem(userSelect);
-						listy3.print();
-					}//else
+			case 'i': // Insert
+					
 				break;
-			
-			case 'd': //Delete
-					cout<< "Enter Item to delete: ";
-					cin >> userSelect; 
-					if(caseI == listType)
-					{
-						valueOfInt = stoi(userSelect);
-						listy.deleteItem(valueOfInt);
-						if(listy.lengthIs() > 0 )
-						{
-							listy.print();
-						}//if
-						else
-						{
-							cout<<endl;
-						}//else 
+			case 'd': // Delete
+					
+				break;
+			case 'r': // Retrieve
 
-					}
-					else if(caseF ==listType)
-					{
-						valueOfFloat = stof(userSelect);
-						listy2.deleteItem(valueOfFloat);
-						if(listy2.lengthIs() > 0 )
-						{
-							listy2.print();
-						}//if
-						else
-						{
-							cout<<endl;
-						}//else 
-					}
-					else
-					{
-						listy3.deleteItem(userSelect);
-						if(listy3.lengthIs() > 0 )
-						{
-							listy3.print();
-						}//if
-						else
-						{
-							cout<<endl;
-						}//else 
-					}
 				break;
-			case 'l': //Length
-					if(caseI == listType)
-					{
-						cout << "The length is: " << listy.lengthIs() << endl;
-					}//if
-					else if(caseF ==listType)
-					{
-						cout << "The length is: " << listy2.lengthIs()<< endl;
-					}//if
-					else
-					{
-						cout << "The length is: " << listy3.lengthIs()<< endl;
-					}//else 
+			case 'l': // Length 
+					
 				break;
-			case 'p':
-					if(caseI == listType)
-					{
-						listy.print();
-					}//if
-					else if(caseF ==listType)
-					{
-						listy2.print();
-					}//if
-					else
-					{
-						listy3.print();
-					}//else 
+			case 'n': // In Order
+					
 				break;
-			case 'b':
-					cout<< "Enter lower bound: "; 
-					cin >> lowerBound;
-					cout << "Enter upper bound: ";
-					cin >> upperBound;
-					if(caseI == listType)
-					{	
-						int upper,lower; 
-						upper = stoi(upperBound);
-						lower = stoi(lowerBound);
-						listy.deleteSubsection(lower,upper);
-					}//if
-					else if(caseF ==listType)
-					{	
-						float upper,lower; 
-						upper = stof(upperBound);
-						lower = stof(lowerBound);
-						listy2.deleteSubsection(lower,upper);
-					}//if
-					else
-					{
-						listy3.deleteSubsection(lowerBound,upperBound);
-					}//else 
+			case 'p': // Pre Order
+					
 				break;
-			case 'm':
-					if(caseI == listType)
-					{
-						listy.mode();
-					}//if
-					else if(caseF ==listType)
-					{
-						listy2.mode();
-					}//if
-					else
-					{
-						listy3.mode();
-					}//else 
+			case 'o': // Post Order
+					
 				break;
-			case 'r':
-					if(caseI == listType)
-					{
-						listy.printReverse();
-					}//if
-					else if(caseF ==listType)
-					{
-						listy2.printReverse();
-					}//if
-					else
-					{
-						listy3.printReverse();
-					}//else 
+			case 's': // getNumSingleParent
+ 					
 				break;
-			case 's':
-					if(caseI == listType)
-					{
-						listy.swapAlternate();
-					}//if
-					else if(caseF ==listType)
-					{
-						listy2.swapAlternate();
-					}//if
-					else
-					{
-						listy3.swapAlternate();
-					}//else
+			case 'f'://getNumLeafNodes
+
+				break;
+			case 't': // getSumOfSubtrees
+
 				break;
 			case 'q':
 				cout << "Quitting..." <<endl;
-				listy.~DoublyLinkedList();
-				listy2.~DoublyLinkedList();
-				listy3.~DoublyLinkedList();
 				return 0;
 				exit = true;
 				break;

@@ -2,11 +2,11 @@ CFLAGS = -g -Wall
 CC = g++
 
 
-compile: main.o DoublyLinkedList.o
-	$(CC) $(CFLAGS) -o main main.o DoublyLinkedList.o
+compile: main.o BinaryTree.o
+	$(CC) $(CFLAGS) -o main main.o BinaryTree.o
 
-DoublyLinkedList:DoublyLinkedList.o
-	$(CC) $(CFLAGS) -c DoublyLinkedList.cpp
+DoublyLinkedList:BinaryTree.o
+	$(CC) $(CFLAGS) -c BinaryTree.cpp
 
 main:main.o
 	$(CC) $(CFLAGS) -c main.cpp
