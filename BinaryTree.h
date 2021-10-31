@@ -16,7 +16,7 @@ class BinaryTree
     void inOrder() const;
     void postOrder() const;
     int getLength() const;
-
+	NodeType<T> getP(T &key);
   private:
     NodeType<T> *root;
 };
