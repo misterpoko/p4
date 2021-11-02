@@ -16,9 +16,21 @@ class BinaryTree
     void inOrder() const;
     void postOrder() const;
     int getLength() const;
-	NodeType<T> getP(T &key);
+    void getNumSingleParent();
+    int getNumLeafNodes();
+    int getSumOfSubtrees();
+
+	  NodeType<T> getP(T &key);
+  
+    //Helper methods
+    void insertHelper(NodeType<T> *root,T &item);
+    void preOrderPrint(NodeType<T> *root) const;
+    void postOrderPrint(NodeType<T> *root) const;
+
+
   private:
     NodeType<T> *root;
+    int length;
 };
 
 template<class T>

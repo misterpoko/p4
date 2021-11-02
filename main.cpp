@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 					cout << "Input doesnt match file type.  Quitting..." << endl;
 					return 1;
 				}//catch 
-				// insert method
+				listy.insert(valueOfInt);
 			} // while
 			cout << endl;
 		}//if 
@@ -136,10 +136,21 @@ int main(int argc, char *argv[])
 					
 				break;
 			case 'p': // Pre Order
-					
+				if(caseI == listType)
+					listy.preOrder();
+				else if(caseF ==listType)
+					listy2.preOrder();
+				else 
+					listy3.preOrder(); 
 				break;
 			case 'o': // Post Order
-					
+				if(caseI == listType)
+					listy.postOrder();
+				else if(caseF ==listType)
+					listy2.postOrder();
+				else 
+					listy3.postOrder(); 
+				break;
 				break;
 			case 's': // getNumSingleParent
  					

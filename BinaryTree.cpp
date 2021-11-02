@@ -7,6 +7,7 @@ template<class T>
 BinaryTree<T>::BinaryTree()
 {
 	root = NULL;
+	length = 0;
 }
 
 template<class T>
@@ -16,9 +17,29 @@ BinaryTree<T>::~BinaryTree()
 }
 
 template<class T>
+void BinaryTree<T>::insertHelper(NodeType<T> *root,T &item)
+{
+	if(root == NULL)
+	{
+		root->right = NULL;
+		root->left = NULL; 
+		root->key = item;
+	} 
+	else if(item < root->key)
+	{
+		insertHelper(root->left, item); //Insert in left subtree
+	}
+	else 
+	{
+		insertHelper(root->right, item);  // Insert in right subtree
+	}
+}
+
+template<class T>
 void BinaryTree<T>::insert(T &key)
 {
-	NodeType<T> *temp = root;
+	insertHelper(root, key); 
+	/*NodeType<T> *temp = root;
 	NodeType<T> *newNode = new NodeType<T>;
 	newNode->key = key;
 	while (temp != NULL)
@@ -38,7 +59,8 @@ void BinaryTree<T>::insert(T &key)
 			return;
 		} // else
 	} // while
-	temp = newNode;
+	temp = newNode;*/
+
 } // insert
 
 template<class T>
@@ -107,7 +129,7 @@ void BinaryTree<T>::deleteItem(T &key)
 /**
  * This method assumes the node exists and this isnt full comments
  */
-template<class T>
+/*template<class T>
 NodeType<T> BinaryTree<T>::getP(T &item)
 {
 	NodeType<T> *temp = root;
@@ -141,7 +163,7 @@ NodeType<T> BinaryTree<T>::getP(T &item)
 		} // if
 	} // while
 	// not sure pushing bad message return NULL;
-} // getP
+} // getP*/
 	
 template<class T>
 void BinaryTree<T>::retrieve(T &item, bool &found) const
@@ -171,27 +193,65 @@ void BinaryTree<T>::retrieve(T &item, bool &found) const
 	} // while
 }
 template<class T>
+void  BinaryTree<T>::preOrderPrint(NodeType<T> *root) const
+{
+	if (root != NULL)
+	{
+		cout << root->key;
+		preOrderPrint(root->left);
+		preOrderPrint(root->right);
+	}
+}
+template<class T>
 void BinaryTree<T>::preOrder() const
 {
-
+	preOrderPrint(root);
 }
+
+
 template<class T>
 void BinaryTree<T>::inOrder() const
 {
 
 }
+
+template<class T>
+void BinaryTree<T>::postOrderPrint(NodeType<T> *root) const
+{
+	postOrderPrint(root->left); 
+	postOrderPrint(root->right);
+	cout << root->key;
+}
+
 template<class T>
 void BinaryTree<T>::postOrder() const
 {
-
+	postOrderPrint(root);
 }
+
 template<class T>
 int BinaryTree<T>::getLength() const
 {
-    return 1;
+    return length;
 }
 
+template<class T>
+void BinaryTree<T>::getNumSingleParent()
+{
 
+}
+
+template<class T>
+int BinaryTree<T>::getNumLeafNodes()
+{
+	return 1;
+}
+
+template<class T>
+int BinaryTree<T>::getSumOfSubtrees()
+{
+	return 1; 
+}
 //Needs to stay at the bottom
 template class BinaryTree<int>;
 template class BinaryTree<float>;
