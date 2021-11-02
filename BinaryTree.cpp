@@ -13,7 +13,7 @@ BinaryTree<T>::BinaryTree()
 template<class T>
 BinaryTree<T>::~BinaryTree()
 {
-
+	
 }
 
 template<class T>

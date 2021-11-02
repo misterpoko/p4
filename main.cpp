@@ -120,8 +120,23 @@ int main(int argc, char *argv[])
 
 		switch (userSelectChar)
 			{
-			case 'i': // Insert
-					
+			case 'i': //Insert
+				cout<< "Enter Item to insert: ";
+				cin >> userSelect; 
+				if(caseI == listType)
+				{
+					valueOfInt = stoi(userSelect);
+					listy.insert(valueOfInt);
+				}//if
+				else if(caseF ==listType)
+				{
+					valueOfFloat = stof(userSelect);
+					listy2.insert(valueOfFloat);
+				}//if
+				else
+				{
+					listy3.insert(userSelect);
+				}//else
 				break;
 			case 'd': // Delete
 					
@@ -130,7 +145,20 @@ int main(int argc, char *argv[])
 
 				break;
 			case 'l': // Length 
-					
+				if(caseI == listType)
+				{
+					listy.getLength();
+				}
+				else if(caseF ==listType)
+				{
+					listy2.getLength();
+					cout << endl;
+				}
+				else 
+				{
+					listy3.getLength(); 
+					cout << endl;
+				}
 				break;
 			case 'n': // In Order
 				if(caseI == listType)
