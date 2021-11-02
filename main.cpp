@@ -139,7 +139,22 @@ int main(int argc, char *argv[])
 				}//else
 				break;
 			case 'd': // Delete
-					
+				cout<< "Enter Item to Delete: ";
+				cin >> userSelect; 
+				if(caseI == listType)
+				{
+					valueOfInt = stoi(userSelect);
+					listy.deleteItem(valueOfInt);
+				}//if
+				else if(caseF ==listType)
+				{
+					valueOfFloat = stof(userSelect);
+					listy2.deleteItem(valueOfFloat);
+				}//if
+				else
+				{
+					listy3.deleteItem(userSelect);
+				}//else
 				break;
 			case 'r': // Retrieve
 

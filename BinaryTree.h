@@ -20,7 +20,7 @@ class BinaryTree
     int getNumLeafNodes();
     int getSumOfSubtrees();
 
-	  NodeType<T> getP(T &key);
+	  NodeType<T> getP(NodeType<T> *current,T &key);
   
     //Helper methods
     void insertPt2(T &key, NodeType<T> *current, NodeType<T> *previous);

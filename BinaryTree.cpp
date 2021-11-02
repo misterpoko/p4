@@ -69,72 +69,75 @@ void BinaryTree<T>::insert(T &key)
 template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
-/*	NodeType<T> *temp = root;  // this is the finder node
-	NodeType<T> *temp2 = NULL; // this node lags behind temp
-	int found = 0;
-	while (!found)
+	NodeType<T> * temp = root;
+	while (temp != NULL && temp->key != key)
 	{
-		temp2 = temp;
 		if (key > temp->key)
-		{
 			temp = temp->right;
-		}
 		if (key < temp->key)
-		{
-			temp = temp->left;
-		} // if
-		if (key == temp->key)
-		{
-			found = 1;
-		} // if
-		if (temp == NULL)
-		{
-			cout << "some error message unfindable" << endl;
-			return;
-		} // if
+			temp = temp->left;	
 	} // while
-	NodeType<T> *record = temp;
-	int right = 0;
-	found = 0;	
-	if (temp->key < temp2->key)
+	if (temp == NULL)
 	{
-		right = 1;	
-	} // if
-	if (temp == root)
-	{
-		if (temp->left == NULL)
-		{
-			root = temp->right;
-			delete temp;
-			return;
-		} // if
-		if (temp->right == NULL)
-		{
-			root = temp->left;
-			delete temp;
-			return;
-		} // if
-	} // if
+		cout << "error dne" << endl;
+		return;
+	} // if 
 	if (temp->right == NULL && temp->left == NULL)
 	{
 		delete temp;
 		return;
-	} // if
-	while (!found)
+	}
+	NodeType<T> * temp2 = temp;
+	if (temp->right != NULL)
 	{
-		if (right && record ->right != NULL)
+		temp2 = temp->right;
+		while (temp2->left != NULL)
+			temp2 = temp2->left;
+	}
+	else
+	{
+		temp2 = temp->left;
+		while (temp2->right != NULL);
+			temp2 = temp2->right;
+	}
+	NodeType<T> temp2P = getP(temp, temp2->key);
+	if (temp == root)
+	{
+		temp2->right = temp->right;
+		temp2->left = temp->left;
+		temp2 = root;
+		delete temp;
+	} 
+	else
+	{
+		NodeType<T> tempP = getP(root, temp->key);
+		if (tempP.right == temp)
 		{
-			record = record->right 		
-	} // while
-*/		
+			tempP.right = temp2;
+			temp2->right = temp->right;
+			temp2->left = temp->left;
+			delete temp;
+		}
+		else
+		{
+			tempP.left = temp2;
+			temp2->right = temp->right;
+			temp2->left = temp->left;
+			delete temp;
+		} // if
+	} // if
+	if (temp2P.right == temp2)
+		temp2P.right == NULL;
+	if (temp2P.left == temp2)
+		temp2P.left == NULL;
 } // deleteItem
 
 /**
  * This method assumes the node exists and this isnt full comments
  */
-/*template<class T>
-NodeType<T> BinaryTree<T>::getP(T &item)
-{
+template<class T>
+NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
+{/*
 	NodeType<T> *temp = root;
 	if (item == root->key)
 	{	
@@ -164,9 +167,28 @@ NodeType<T> BinaryTree<T>::getP(T &item)
 			found = 1;
 			// something is wrong this is here to prevent potential infinite loops
 		} // if
-	} // while
+	} // while*/
 	// not sure pushing bad message return NULL;
-} // getP*/
+	NodeType<T> *blank = NULL;
+	if (current == NULL)
+		return *blank;
+	if ((current->right != NULL && current->right->key == item) || (current->left != NULL && current->left->key == item))
+	{
+		return *current;
+	}
+	else
+	{
+		if (item > current->key)
+		{
+			return getP(current->right, item);
+		} // if
+		if (item < current->key)
+		{
+			return getP(current->left, item);
+		} // if
+	} // if
+	return *blank;
+} // getP
 	
 template<class T>
 void BinaryTree<T>::retrieve(T &item, bool &found) const
