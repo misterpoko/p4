@@ -23,6 +23,8 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
     {
         NodeType<T> * inserted = new NodeType<T>;
         inserted->key = key;
+	inserted->right = NULL;
+	inserted->left = NULL;
         root = inserted;
         return;
     }
@@ -30,6 +32,8 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
     {
         NodeType<T> * inserted = new NodeType<T>;
         inserted->key = key;
+	inserted->right = NULL;
+	inserted->left = NULL;
         if (key > previous->key)
         {
             previous->right = inserted;
