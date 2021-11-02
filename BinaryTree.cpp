@@ -85,6 +85,7 @@ void BinaryTree<T>::deleteItem(T &key)
 	if (temp->right == NULL && temp->left == NULL)
 	{
 		delete temp;
+		temp = NULL;
 		return;
 	}
 	NodeType<T> * temp2 = temp;
@@ -107,6 +108,8 @@ void BinaryTree<T>::deleteItem(T &key)
 		temp2->left = temp->left;
 		temp2 = root;
 		delete temp;
+		temp = NULL;
+		return;
 	} 
 	else
 	{
@@ -130,6 +133,7 @@ void BinaryTree<T>::deleteItem(T &key)
 		temp2P.right == NULL;
 	if (temp2P.left == temp2)
 		temp2P.left == NULL;
+	temp = NULL;
 } // deleteItem
 
 /**
@@ -189,6 +193,11 @@ NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
 	} // if
 	return *blank;
 } // getP
+
+void uo()
+{
+	write(1,"error", 6);
+}
 	
 template<class T>
 void BinaryTree<T>::retrieve(T &item, bool &found) const
