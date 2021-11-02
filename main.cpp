@@ -133,8 +133,23 @@ int main(int argc, char *argv[])
 					
 				break;
 			case 'n': // In Order
-					
+				if(caseI == listType)
+				{
+					listy.inOrder();
+					cout << endl;
+				}
+				else if(caseF ==listType)
+				{
+					listy2.inOrder();
+					cout << endl;
+				}
+				else 
+				{
+					listy3.inOrder(); 
+					cout << endl;
+				}
 				break;
+					
 			case 'p': // Pre Order
 				if(caseI == listType)
 				{

@@ -37,7 +37,7 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
         } // if
         if (key < previous->key)
         {
-            previous->right = inserted;
+            previous->left = inserted;
             return;
         }
         return;
@@ -60,29 +60,6 @@ template<class T>
 void BinaryTree<T>::insert(T &key)
 {
 	insertPt2(key, root, NULL);
-	/*
-	NodeType<T> *temp = root;
-	NodeType<T> *newNode = new NodeType<T>;
-	newNode->key = key;
-	while (temp != NULL)
-	{
-		if (newNode->key > temp->key)
-		{
-			temp = temp->right;
-		}
-		else if (newNode->key < temp->key)
-		{
-			temp = temp->left;
-		}
-		else
-		{
-			cout << "some error message that its a dup" << endl;
-			delete newNode;
-			return;
-		} // else
-	} // while
-	temp = newNode;*/
-
 } // insert
 
 template<class T>
@@ -230,21 +207,33 @@ void BinaryTree<T>::preOrder() const
 	preOrderPrint(root);
 }
 
+template<class T>
+void BinaryTree<T>::inOrderPrint(NodeType<T> *root) const
+{
+	if (root != NULL)
+	{
+		inOrderPrint(root->left);
+		cout << root->key << " ";
+		inOrderPrint(root->right);
+	}
+}
 
 template<class T>
 void BinaryTree<T>::inOrder() const
 {
-
+	inOrderPrint(root);
 }
 
 template<class T>
 void BinaryTree<T>::postOrderPrint(NodeType<T> *root) const
 {
-	postOrderPrint(root->left); 
-	postOrderPrint(root->right);
-	cout << root->key;
+	if (root != NULL)
+	{
+		postOrderPrint(root->left); 
+		postOrderPrint(root->right);
+		cout << root->key << " ";
+	}
 }
-
 template<class T>
 void BinaryTree<T>::postOrder() const
 {
