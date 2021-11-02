@@ -137,19 +137,38 @@ int main(int argc, char *argv[])
 				break;
 			case 'p': // Pre Order
 				if(caseI == listType)
+				{
 					listy.preOrder();
+					cout << endl;
+				}
 				else if(caseF ==listType)
+				{
 					listy2.preOrder();
+					cout << endl;
+				}
 				else 
+				{
 					listy3.preOrder(); 
+					cout << endl;
+				}
 				break;
 			case 'o': // Post Order
 				if(caseI == listType)
+				{
 					listy.postOrder();
+					cout << endl;
+				}
 				else if(caseF ==listType)
+				{
 					listy2.postOrder();
+					cout << endl;
+				}
 				else 
+				{
 					listy3.postOrder(); 
+					cout << endl;
+				}
+					
 				break;
 				break;
 			case 's': // getNumSingleParent

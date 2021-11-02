@@ -17,29 +17,51 @@ BinaryTree<T>::~BinaryTree()
 }
 
 template<class T>
-void BinaryTree<T>::insertHelper(NodeType<T> *root,T &item)
+void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previous)
 {
-	if(root == NULL)
-	{
-		root->right = NULL;
-		root->left = NULL; 
-		root->key = item;
-	} 
-	else if(item < root->key)
-	{
-		insertHelper(root->left, item); //Insert in left subtree
-	}
-	else 
-	{
-		insertHelper(root->right, item);  // Insert in right subtree
-	}
+	if (root == NULL)
+    {
+        NodeType<T> * inserted = new NodeType<T>;
+        inserted->key = key;
+        root = inserted;
+        return;
+    }
+    if (current == NULL)
+    {
+        NodeType<T> * inserted = new NodeType<T>;
+        inserted->key = key;
+        if (key > previous->key)
+        {
+            previous->right = inserted;
+            return;
+        } // if
+        if (key < previous->key)
+        {
+            previous->right = inserted;
+            return;
+        }
+        return;
+    }
+    if (key > current->key)
+    {
+        insertPt2(key, current->right, current);
+    }
+    if (key < current->key)
+    {
+        insertPt2(key, current->left, current);
+    }
+    if (key == current->key)
+    {
+        cout << "some error message dup" << endl;
+    }
 }
 
 template<class T>
 void BinaryTree<T>::insert(T &key)
 {
-	insertHelper(root, key); 
-	/*NodeType<T> *temp = root;
+	insertPt2(key, root, NULL);
+	/*
+	NodeType<T> *temp = root;
 	NodeType<T> *newNode = new NodeType<T>;
 	newNode->key = key;
 	while (temp != NULL)
@@ -197,7 +219,7 @@ void  BinaryTree<T>::preOrderPrint(NodeType<T> *root) const
 {
 	if (root != NULL)
 	{
-		cout << root->key;
+		cout << root->key << " ";
 		preOrderPrint(root->left);
 		preOrderPrint(root->right);
 	}

@@ -23,7 +23,7 @@ class BinaryTree
 	  NodeType<T> getP(T &key);
   
     //Helper methods
-    void insertHelper(NodeType<T> *root,T &item);
+    void insertPt2(T &key, NodeType<T> *current, NodeType<T> *previous);
     void preOrderPrint(NodeType<T> *root) const;
     void postOrderPrint(NodeType<T> *root) const;
 
