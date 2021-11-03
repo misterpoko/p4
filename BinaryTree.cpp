@@ -8,6 +8,8 @@ BinaryTree<T>::BinaryTree()
 {
 	root = NULL;
 	length = 0;
+  numberOfParents = 0;
+  numberOfLeafs = 0; 
 }
 
 template<class T>
@@ -23,8 +25,8 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
     {
         NodeType<T> * inserted = new NodeType<T>;
         inserted->key = key;
-	inserted->right = NULL;
-	inserted->left = NULL;
+	      inserted->right = NULL; 
+        inserted->left = NULL;
         root = inserted;
         return;
     }
@@ -32,8 +34,8 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
     {
         NodeType<T> * inserted = new NodeType<T>;
         inserted->key = key;
-	inserted->right = NULL;
-	inserted->left = NULL;
+	      inserted->right = NULL;
+        inserted->left = NULL;
         if (key > previous->key)
         {
             previous->right = inserted;
@@ -66,10 +68,69 @@ void BinaryTree<T>::insert(T &key)
 	insertPt2(key, root, NULL);
 } // insert
 
+
+template<class T>
+void BinaryTree<T>::getPredecessor(NodeType<T> *root, T &data)
+{	
+	while(root->right != NULL)
+	{
+		root = root->right;
+	}
+	data = root->key;
+	
+}
+
+template<class T>
+void BinaryTree<T>::DeleteNode(NodeType<T> *root, T &key)
+{
+	T data;
+	NodeType<T> *tempPtr;
+	tempPtr = root;
+	if(root->left == NULL)
+	{
+		root = root->left;
+		delete(tempPtr);
+		tempPtr = NULL;
+	}
+	else if(root->right == NULL)
+	{
+		root = root->right; 
+		delete(tempPtr);
+		tempPtr = NULL;
+	}
+	else
+	{
+		getPredecessor(root->left, data);\
+		root->key = data;
+		deleteHelper(root->left, data);
+	}
+}
+
+
+template<class T>
+void BinaryTree<T>::deleteHelper(NodeType<T> *root, T &key)
+{
+	if(key<root->key)
+	{
+		deleteHelper(root->left, key);
+	}
+	else if(key>root->key)
+	{
+		deleteHelper(root->right, key);
+	}
+	else //Node found
+	{
+		cout << "Found" << endl;
+		DeleteNode(root, key);
+	}
+}
+
+
 template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
-	NodeType<T> * temp = root;
+	deleteHelper(root,key);
+	/*NodeType<T> * temp = root;
 	while (temp != NULL && temp->key != key)
 	{
 		if (key > temp->key)
@@ -133,7 +194,7 @@ void BinaryTree<T>::deleteItem(T &key)
 		temp2P.right == NULL;
 	if (temp2P.left == temp2)
 		temp2P.left == NULL;
-	temp = NULL;
+	temp = NULL;*/
 } // deleteItem
 
 /**
@@ -206,10 +267,15 @@ void BinaryTree<T>::retrieve(T &item, bool &found) const
 	int beenFound = 0;
 	while (!beenFound)
 	{
+    if (temp == NULL)
+		{
+			found = false;
+			beenFound = 1;
+		} 
 		if (item > temp->key)
 		{
 			temp = temp->right;
-		}
+		} //if
 		if (item < temp->key)
 		{
 			temp = temp->left;
@@ -219,13 +285,9 @@ void BinaryTree<T>::retrieve(T &item, bool &found) const
 			found = true;
 			beenFound = 1;
 		} // if
-		if (temp == NULL)
-		{
-			found = false;
-			beenFound = 1;
-		} // if
 	} // while
-}
+}// retrieve
+
 template<class T>
 void  BinaryTree<T>::preOrderPrint(NodeType<T> *root) const
 {
@@ -234,13 +296,13 @@ void  BinaryTree<T>::preOrderPrint(NodeType<T> *root) const
 		cout << root->key << " ";
 		preOrderPrint(root->left);
 		preOrderPrint(root->right);
-	}
-}
+	} //if
+} // preOrderPrint
 template<class T>
 void BinaryTree<T>::preOrder() const
 {
 	preOrderPrint(root);
-}
+} // preOrder
 
 template<class T>
 void BinaryTree<T>::inOrderPrint(NodeType<T> *root) const
@@ -250,14 +312,14 @@ void BinaryTree<T>::inOrderPrint(NodeType<T> *root) const
 		inOrderPrint(root->left);
 		cout << root->key << " ";
 		inOrderPrint(root->right);
-	}
-}
+	} //if
+}// inOrderPrint
 
 template<class T>
 void BinaryTree<T>::inOrder() const
 {
 	inOrderPrint(root);
-}
+} // inOrder
 
 template<class T>
 void BinaryTree<T>::postOrderPrint(NodeType<T> *root) const
@@ -267,37 +329,96 @@ void BinaryTree<T>::postOrderPrint(NodeType<T> *root) const
 		postOrderPrint(root->left); 
 		postOrderPrint(root->right);
 		cout << root->key << " ";
-	}
-}
+	} //if
+} // postOrderPrint
 template<class T>
 void BinaryTree<T>::postOrder() const
 {
 	postOrderPrint(root);
-}
+} // postOrder
 
 template<class T>
 int BinaryTree<T>::getLength() const
 {
-    return length;
-}
+  return length;
+} //getLength
 
 template<class T>
 void BinaryTree<T>::getNumSingleParent()
 {
-
-}
-
-template<class T>
-int BinaryTree<T>::getNumLeafNodes()
-{
-	return 1;
-}
+  getNumSingleParentHelper(root);
+  cout << "Number of single parents: " << numberOfParents << endl;
+  numberOfParents = 0;
+} //getNumSingleParent
 
 template<class T>
-int BinaryTree<T>::getSumOfSubtrees()
+void BinaryTree<T>::getNumSingleParentHelper(NodeType<T> *root)
 {
-	return 1; 
-}
+  if(root == NULL)
+  {
+    return;
+  }//if
+  else if (root->left != NULL && root->right == NULL || root->left == NULL && root->right != NULL)
+  {
+    numberOfParents++;
+  }//if
+  getNumSingleParentHelper(root->left);
+  getNumSingleParentHelper(root->right);
+} // getNumSingleParentHelper
+
+template<class T>
+void BinaryTree<T>::getNumLeafNodesHelper(NodeType<T> *root)
+{
+  if( root == NULL )
+  {
+    return;
+  }//if
+  else if( root->left == NULL && root->right == NULL ) 
+  {
+    numberOfLeafs++;
+  } // if
+  getNumLeafNodesHelper(root->left); 
+  getNumLeafNodesHelper(root->right);
+} //getNumLeafNodesHelper
+
+
+template<class T>
+void BinaryTree<T>::getNumLeafNodes()
+{
+  getNumLeafNodesHelper(root);
+  cout << "Number of leaf nodes: " << numberOfLeafs << endl;
+  numberOfLeafs = 0;
+} //getNumLeafNodes
+
+template<class T>
+void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
+{
+   T sumOfSubTrees;
+   if( root == NULL )
+   {
+     return; 
+   }// if
+   else if( root->left != NULL && root->right != NULL && root->key == item )
+   {
+     sumOfSubTrees = root->left->key +  root->right->key;
+     cout << "Sum of Subtrees: " << sumOfSubTrees << endl;
+     present = true;
+   }// else if
+   getSumOfSubtreesHelper(root->left,item, present); 
+   getSumOfSubtreesHelper(root->right,item, present);
+} //getSumOfSubtreesHelper
+
+template<class T>
+void BinaryTree<T>::getSumOfSubtrees(T &item)
+{
+  bool present = false;
+	getSumOfSubtreesHelper(root, item, present); 
+  if ( present == false)
+  {
+    cout << "Item no present or isnt a subtree" << endl; 
+  } // if
+} //getSumOfSubtrees
+
 //Needs to stay at the bottom
 template class BinaryTree<int>;
 template class BinaryTree<float>;

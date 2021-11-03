@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 					cout << "Input doesnt match file type. Quitting..." << endl;
 					return 1;
 				}//catch
-				// insert method
+				listy2.insert(valueOfFloat);
 			}//while 
 			cout << endl;
 		}//if 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 			}//if
 			while (getline(inFile, subLine,' '))//Gets each variable until it hits a space or EOF
 			{
-				//insert method
+				listy3.insert(subLine);
 			}//while
 			cout << endl;
 		}//if
@@ -156,8 +156,48 @@ int main(int argc, char *argv[])
 					listy3.deleteItem(userSelect);
 				}//else
 				break;
-			case 'r': // Retrieve
-
+			case 'r': // Retrieve retrieve
+        bool found;
+        cout<< "Item to be retrieved: ";
+				cin >> userSelect; 
+				if(caseI == listType)
+				{
+					valueOfInt = stoi(userSelect);
+					listy.retrieve(valueOfInt, found);
+          if(found == true)
+          {
+            cout << "Item in tree" << endl; 
+          }
+          else 
+          {
+            cout << "Item not in tree" << endl;
+          } 
+				}//if
+				else if(caseF ==listType)
+				{
+					valueOfFloat = stof(userSelect);
+					listy2.retrieve(valueOfFloat, found);
+          if(found == true)
+          {
+            cout << "Item in tree" << endl; 
+          }
+          else 
+          {
+            cout << "Item not in tree" << endl;
+          } 
+				}//if
+				else
+				{
+					listy3.retrieve(userSelect,found);
+          if(found == true)
+          {
+            cout << "Item in tree" << endl; 
+          }
+          else 
+          {
+            cout << "Item not in tree" << endl;
+          } 
+				}//else
 				break;
 			case 'l': // Length 
 				if(caseI == listType)
@@ -226,17 +266,60 @@ int main(int argc, char *argv[])
 					listy3.postOrder(); 
 					cout << endl;
 				}
-					
 				break;
+			case 's': // getNumSingleParent 
+ 					if(caseI == listType)
+				{
+					listy.getNumSingleParent();
+					cout << endl;
+				}
+				else if(caseF ==listType)
+				{
+					listy2.getNumSingleParent();
+					cout << endl;
+				}
+				else 
+				{
+					listy3.getNumSingleParent(); 
+					cout << endl;
+				}
 				break;
-			case 's': // getNumSingleParent
- 					
-				break;
-			case 'f'://getNumLeafNodes
-
+			case 'f'://getNumLeafNodes 
+        if(caseI == listType)
+				{
+					listy.getNumLeafNodes();
+					cout << endl;
+				}
+				else if(caseF ==listType)
+				{
+					listy2.getNumLeafNodes();
+					cout << endl;
+				}
+				else 
+				{
+					listy3.getNumLeafNodes(); 
+					cout << endl;
+				}
 				break;
 			case 't': // getSumOfSubtrees
-
+        cout << "Item to get sum of subtrees: ";
+        cin >> userSelect;
+        if(caseI == listType)
+				{
+         	valueOfInt = stoi(userSelect);
+					listy.getSumOfSubtrees(valueOfInt);
+					cout << endl;
+				}
+				else if(caseF ==listType)
+				{
+          valueOfFloat = stof(userSelect);
+					listy2.getSumOfSubtrees(valueOfFloat);
+					cout << endl;
+				}
+				else 
+				{
+				  cout << "String sum not supported" << endl << endl; 
+				}
 				break;
 			case 'q':
 				cout << "Quitting..." <<endl;

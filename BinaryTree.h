@@ -1,5 +1,5 @@
-#ifndef DOUBLYLINKEDLIST_H
-#define DOUBLYLINKEDLIST_H
+#ifndef BINARYTREE_H
+#define BINARYTREE_H
 using namespace std;
 
 template<class T> struct NodeType;
@@ -16,9 +16,17 @@ class BinaryTree
     void inOrder() const;
     void postOrder() const;
     int getLength() const;
+    
+    
+    
     void getNumSingleParent();
-    int getNumLeafNodes();
-    int getSumOfSubtrees();
+    void getNumSingleParentHelper(NodeType<T> *root);
+    
+    void getNumLeafNodes();
+    void getNumLeafNodesHelper(NodeType<T> *root);
+    
+    void getSumOfSubtreesHelper(NodeType<T> *root,T &item,bool &present);
+    void getSumOfSubtrees(T &item);
 
 	  NodeType<T> getP(NodeType<T> *current,T &key);
   
@@ -29,9 +37,18 @@ class BinaryTree
     void postOrderPrint(NodeType<T> *root) const;
 
 
+
+    // Delete Helpers
+    void DeleteNode(NodeType<T> *root, T &key);
+    void getPredecessor(NodeType<T> *root, T &data);
+    void deleteHelper(NodeType<T> *root, T &key);
+
+
   private:
     NodeType<T> *root;
     int length;
+    int numberOfParents; 
+    int numberOfLeafs;
 };
 
 template<class T>
