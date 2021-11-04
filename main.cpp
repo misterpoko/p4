@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
   bool check = true;
   bool found = false;
 	int valueOfInt;
+  int length; 
 	float valueOfFloat;
  	char userSelectChar,listType;
 	char caseI = 'i';
@@ -118,7 +119,6 @@ int main(int argc, char *argv[])
 			cin >> userSelect;
 		}//while
 		userSelectChar = userSelect[0];
-
 		switch (userSelectChar)
 			{
 			case 'i': //Insert
@@ -128,15 +128,24 @@ int main(int argc, char *argv[])
 				{
 					valueOfInt = stoi(userSelect);
 					listy.insert(valueOfInt);
+          cout << "In-Order:  ";
+          listy.inOrder();
+          cout << endl << endl ;
 				}//if
 				else if(caseF ==listType)
 				{
 					valueOfFloat = stof(userSelect);
 					listy2.insert(valueOfFloat);
+          cout << "In-Order:  ";
+          listy2.inOrder();
+          cout << endl << endl ;
 				}//if
 				else
 				{
 					listy3.insert(userSelect);
+          cout << "In-Order:  ";
+          listy3.inOrder();
+          cout << endl << endl;
 				}//else
 				break;
 			case 'd': // Delete
@@ -158,6 +167,7 @@ int main(int argc, char *argv[])
 				}//else
 				break;
 			case 'r': // Retrieve retrieve
+        found = false;
         cout<< "Item to be retrieved: ";
 				cin >> userSelect; 
 				if(caseI == listType)
@@ -202,69 +212,79 @@ int main(int argc, char *argv[])
 			case 'l': // Length 
 				if(caseI == listType)
 				{
-					listy.getLength();
+					length = listy.getLength();
+          cout << "Tree Length: " << length << endl; 
 				}
 				else if(caseF ==listType)
 				{
-					listy2.getLength();
-					cout << endl;
+					length = listy2.getLength();
+				  cout << "Tree Length: " << length << endl; 
 				}
 				else 
 				{
-					listy3.getLength(); 
-					cout << endl;
+					length = listy3.getLength(); 
+					cout << "Tree Length: " << length << endl; 
 				}
 				break;
-			case 'n': // In Order
+			case 'n': // In-Order
 				if(caseI == listType)
 				{
+          cout << "In-Order:  ";
 					listy.inOrder();
-					cout << endl;
-				}
+          cout << endl << endl ;
+				}				
 				else if(caseF ==listType)
 				{
+          cout << "In-Order:  ";
 					listy2.inOrder();
-					cout << endl;
+          cout << endl << endl ;
 				}
 				else 
 				{
+          cout << "In-Order:  ";
 					listy3.inOrder(); 
-					cout << endl;
+          cout << endl << endl ;
 				}
 				break;
 					
-			case 'p': // Pre Order
+			case 'p': // Pre-Order
 				if(caseI == listType)
 				{
+          cout << "Pre-Order:  ";
 					listy.preOrder();
-					cout << endl;
+          cout << endl << endl ;
 				}
 				else if(caseF ==listType)
 				{
+          cout << "Pre-Order:  ";
 					listy2.preOrder();
-					cout << endl;
+          cout << endl << endl ;
 				}
 				else 
 				{
+          cout << "Pre-Order:  ";
 					listy3.preOrder(); 
-					cout << endl;
+          cout << endl << endl ;
 				}
 				break;
-			case 'o': // Post Order
+			case 'o': // Post-Order
 				if(caseI == listType)
 				{
+          cout << "Post-Order:  ";
 					listy.postOrder();
-					cout << endl;
+          cout << endl << endl ;
 				}
 				else if(caseF ==listType)
 				{
+          cout << "Post-Order:  ";
 					listy2.postOrder();
-					cout << endl;
+          cout << endl << endl ;
 				}
 				else 
 				{
+          cout << "Post-Order:  ";
 					listy3.postOrder(); 
-					cout << endl;
+          cout << endl << endl ;
 				}
 				break;
 			case 's': // getNumSingleParent 
@@ -327,7 +347,7 @@ int main(int argc, char *argv[])
 				exit = true;
 				break;
 			default:
-				cout << "Invalid command, try again!" << endl;
+				cout << "Command not recognized. Try again" << endl;
 				break;
 			}
 	}//while

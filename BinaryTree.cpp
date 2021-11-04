@@ -10,6 +10,7 @@ BinaryTree<T>::BinaryTree()
 	length = 0;
   numberOfParents = 0;
   numberOfLeafs = 0; 
+  first = true;
 }
 
 template<class T>
@@ -28,6 +29,7 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
 	      inserted->right = NULL; 
         inserted->left = NULL;
         root = inserted;
+        length++;
         return;
     }
     if (current == NULL)
@@ -39,11 +41,13 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
         if (key > previous->key)
         {
             previous->right = inserted;
+            length++;
             return;
         } // if
         if (key < previous->key)
         {
             previous->left = inserted;
+            length++;
             return;
         }
         return;
@@ -58,7 +62,7 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
     }
     if (key == current->key)
     {
-        cout << "some error message dup" << endl;
+        cout << "Item already in tree." << endl;
     }
 }
 
@@ -408,6 +412,32 @@ void BinaryTree<T>::getNumLeafNodes()
   numberOfLeafs = 0;
 } //getNumLeafNodes
 
+/*template<class T>
+void subTreeAddtions(NodeType<T> *root,T &sumOfSubTrees)
+{
+  if( root == NULL )
+   {
+     return; 
+   }// if
+   if(root->left != NULL && root->right != NULL)
+   {
+     cout << "First "<< root->left->key +  root->right->key << endl;
+     sumOfSubTrees = root->left->key + root->right->key;
+   }
+   else if (root->left == NULL && root->right != NULL) 
+   {
+     cout << "Second "<< root->left->key << endl;
+     sumOfSubTrees = root->right->key;
+   }
+   else if (root->left != NULL && root->right == NULL)
+   {
+     cout << "Third "<< root->right->key << endl;
+     sumOfSubTrees = root->left->key;
+   }
+   subTreeAddtions(root->left, sumOfSubTrees); 
+   subTreeAddtions(root->right, sumOfSubTrees);
+}*/
+
 template<class T>
 void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
 {
@@ -416,14 +446,31 @@ void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &pres
    {
      return; 
    }// if
-   else if( root->left != NULL && root->right != NULL && root->key == item )
+   if( root->left != NULL && root->right != NULL && root->key == item )
    {
      sumOfSubTrees = root->left->key +  root->right->key;
      cout << "Sum of Subtrees: " << sumOfSubTrees << endl;
      present = true;
-   }// else if
-   getSumOfSubtreesHelper(root->left,item, present); 
-   getSumOfSubtreesHelper(root->right,item, present);
+   }// if
+   if(root->left == NULL && root->right != NULL && root->key == item )
+   {
+     sumOfSubTrees = root->right->key + sumOfSubTrees;
+     cout << "Sum of Subtrees: " << sumOfSubTrees << endl;
+     present = true;
+   }// if
+   if(root->left != NULL && root->right == NULL && root->key == item )
+   {
+     sumOfSubTrees = root->left->key+ sumOfSubTrees;
+     cout << "Sum of Subtrees: " << sumOfSubTrees << endl;
+     present = true;
+   }// if
+   if(root->left == NULL && root->right == NULL && root->key == item )
+   {
+     cout << "Sum of Subtrees: 0" << endl;
+     present = true;
+   }//if
+   getSumOfSubtreesHelper(root->left, item, present); 
+   getSumOfSubtreesHelper(root->right, item, present);
 } //getSumOfSubtreesHelper
 
 template<class T>

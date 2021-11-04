@@ -49,6 +49,7 @@ class BinaryTree
     int length;
     int numberOfParents; 
     int numberOfLeafs;
+    bool first;
 };
 
 template<class T>
