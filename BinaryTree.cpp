@@ -16,8 +16,23 @@ BinaryTree<T>::BinaryTree()
 template<class T>
 BinaryTree<T>::~BinaryTree()
 {
-	
+	destroy(root);
+	root = NULL;
 }
+
+template<class T>
+void BinaryTree<T>::destroy (NodeType<T> *node)
+{
+	if (node != NULL)
+	{
+		if (node->right != NULL)
+			destroy(node->right);
+		if (node->left != NULL)
+			destroy(node->left);
+		delete node;
+		node = NULL;
+	} // if
+} // if
 
 template<class T>
 void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previous)
@@ -133,72 +148,107 @@ void BinaryTree<T>::deleteHelper(NodeType<T> *root, T &key)
 template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
-	deleteHelper(root,key);
-	/*NodeType<T> * temp = root;
-	while (temp != NULL && temp->key != key)
+	//deleteHelper(root,key);
+	NodeType<T> * exists = root;
+	while (exists != NULL)
 	{
-		if (key > temp->key)
-			temp = temp->right;
-		if (key < temp->key)
-			temp = temp->left;	
-	} // while
-	if (temp == NULL)
+		if (exists->key == key)
+			break;
+		else if (key > exists->key)
+			exists = exists->right;
+		else if (key < exists->key)
+			exists = exists->left;
+	} // if
+	if (exists == NULL)
 	{
-		cout << "error dne" << endl;
+		cout << "dne" << endl;
 		return;
-	} // if 
-	if (temp->right == NULL && temp->left == NULL)
+	} // if
+/**	bool retrievable = false;
+	retrieve(key, retrievable);
+	if (retrievable)
 	{
-		delete temp;
-		temp = NULL;
+		deleteHelper(root,key);
 		return;
-	}
-	NodeType<T> * temp2 = temp;
-	if (temp->right != NULL)
+	} // if
+	cout << "dne" << endl;*/
+	if (key == root->key)
 	{
-		temp2 = temp->right;
-		while (temp2->left != NULL)
-			temp2 = temp2->left;
-	}
-	else
-	{
-		temp2 = temp->left;
-		while (temp2->right != NULL);
-			temp2 = temp2->right;
-	}
-	NodeType<T> temp2P = getP(temp, temp2->key);
-	if (temp == root)
-	{
-		temp2->right = temp->right;
-		temp2->left = temp->left;
-		temp2 = root;
-		delete temp;
-		temp = NULL;
-		return;
-	} 
-	else
-	{
-		NodeType<T> tempP = getP(root, temp->key);
-		if (tempP.right == temp)
+		NodeType<T> *temp = root;
+		if (temp->right != NULL)
 		{
-			tempP.right = temp2;
-			temp2->right = temp->right;
-			temp2->left = temp->left;
+			temp = temp->right;
+		//	NodeType<T> *tempP = temp;
+			while (temp->left != NULL)
+			{
+		//		if (temp->left->left == NULL)
+		//			tempP = temp;
+				temp = temp->left;
+			} // while
+			root->key = temp->key;
+		//	tempP->left = NULL;
 			delete temp;
+			temp = NULL;
 		}
 		else
 		{
-			tempP.left = temp2;
-			temp2->right = temp->right;
-			temp2->left = temp->left;
+			root = root-> left;
 			delete temp;
+			temp = NULL;
 		} // if
+		return;
 	} // if
-	if (temp2P.right == temp2)
-		temp2P.right == NULL;
-	if (temp2P.left == temp2)
-		temp2P.left == NULL;
-	temp = NULL;*/
+	NodeType<T> * tbd = root;
+	NodeType<T> * tbdS = root;
+	NodeType<T> * tbdP = root;
+	while (tbd->key != key)
+	{
+		if (key > tbd->key)
+			tbd = tbd->right;
+		else if (key < tbd->key)
+			tbd = tbd->left;
+		if (tbd->right != NULL && tbd->right->key == key)
+				tbdP = tbd;
+		else if (tbd->left != NULL && tbd->left->key == key)
+				tbdP = tbd;
+	} // while
+	if (tbd->right == NULL && tbd->right == NULL)
+	{
+		if (tbdP->right == tbd)
+			tbdP->right = NULL;
+		else if (tbdP->left == tbd)
+			tbdP->left = NULL;
+		delete tbd;
+		tbd = NULL;
+	}
+	else if (tbd->right != NULL && tbd->left != NULL)
+	{
+		tbdS = tbd->right;
+		while (tbdS->left != NULL)
+			tbdS = tbdS->left;
+		tbd->key = tbdS->key;
+		delete tbdS;
+		tbdS = NULL;
+	}
+	else
+	{
+		if (tbd->right == NULL)
+		{
+			if (tbdP->right == tbd)
+				tbdP->right = tbd->left;
+			else
+				tbdP->left = tbd->left;
+		}
+		else
+		{
+			if (tbdP->right == tbd)
+				tbdP->right = tbd->right;
+			else
+				tbdP->left = tbd->right;
+		} // if
+		delete tbd;
+		tbd = nullptr;
+	} // if
 } // deleteItem
 
 /**

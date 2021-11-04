@@ -342,6 +342,9 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'q':
+				listy.~BinaryTree();
+				listy2.~BinaryTree();
+				listy3.~BinaryTree();
 				cout << "Quitting..." <<endl;
 				return 0;
 				exit = true;

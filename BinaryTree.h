@@ -42,7 +42,7 @@ class BinaryTree
     void DeleteNode(NodeType<T> *root, T &key);
     void getPredecessor(NodeType<T> *root, T &data);
     void deleteHelper(NodeType<T> *root, T &key);
-
+	void destroy(NodeType<T> *node);
 
   private:
     NodeType<T> *root;
