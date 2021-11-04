@@ -3,6 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+
 template<class T>
 BinaryTree<T>::BinaryTree()
 {
@@ -99,8 +101,8 @@ void BinaryTree<T>::getPredecessor(NodeType<T> *root, T &data)
 	
 }
 
-template<class T>
-void BinaryTree<T>::DeleteNode(NodeType<T> *root, T &key)
+/*template<class T>
+NodeType<T>* BinaryTree<T>::DeleteNode(NodeType<T> *root, T &key)
 {
 	T data;
 	NodeType<T> *tempPtr;
@@ -123,13 +125,13 @@ void BinaryTree<T>::DeleteNode(NodeType<T> *root, T &key)
 		root->key = data;
 		deleteHelper(root->left, data);
 	}
-}
+}*/
 
 
 template<class T>
 void BinaryTree<T>::deleteHelper(NodeType<T> *root, T &key)
 {
-	if(key<root->key)
+/*	if(key<root->key)
 	{
 		deleteHelper(root->left, key);
 	}
@@ -141,11 +143,41 @@ void BinaryTree<T>::deleteHelper(NodeType<T> *root, T &key)
 	{
 		cout << "Found" << endl;
 		DeleteNode(root, key);
-	}
+	}*/
+/*
+	if (theNode == NULL)
+		return theNode;
+	if (key < theNode->key)
+		theNode->left = deleteNode(theNode->left,key);
+	else if (key > theNode->key)
+		theNode->right = deleteNode(theNode->right,key);
+	else
+	{
+		if (theNode->left == NULL && theNode->right == NULL)
+			return NULL;
+		else if (theNode->left == NULL)
+		{
+			NodeType<T> * temp = theNode->right;
+			delete theNode;
+			return temp;
+		}
+		else if (theNode->right == NULL)
+		{
+			NodeType<T> * temp = theNode->left;
+			delete theNode;
+			return temp;
+		}
+		NodeType<T> * temp = theNode->right;
+		while (temp->left != NULL)
+			temp = temp->left;
+		theNode->key = temp->key;
+		theNode->right = deleteTheNode(theNode->right, temp->key);
+	} // if
+	return theNode;*/
 }
 
 
-template<class T>
+/*template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
 	//deleteHelper(root,key);
@@ -164,14 +196,14 @@ void BinaryTree<T>::deleteItem(T &key)
 		cout << "dne" << endl;
 		return;
 	} // if
-/**	bool retrievable = false;
+//	bool retrievable = false;
 	retrieve(key, retrievable);
 	if (retrievable)
 	{
 		deleteHelper(root,key);
 		return;
 	} // if
-	cout << "dne" << endl;*/
+//	cout << "dne" << endl;
 	if (key == root->key)
 	{
 		NodeType<T> *temp = root;
@@ -249,45 +281,55 @@ void BinaryTree<T>::deleteItem(T &key)
 		delete tbd;
 		tbd = nullptr;
 	} // if
+} // deleteItem */
+template<class T>
+void BinaryTree<T>::deleteItem(T &key)
+{
+	deleteTheNode(root, key);
 } // deleteItem
+
+template<class T>
+NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
+{
+	if (theNode == NULL)
+		return theNode;
+	if (key < theNode->key)
+		theNode->left = deleteTheNode(theNode->left,key);
+	else if (key > theNode->key)
+		theNode->right = deleteTheNode(theNode->right,key);
+	else
+	{
+		if (theNode->left == NULL && theNode->right == NULL)
+			return NULL;
+		else if (theNode->left == NULL)
+		{
+			NodeType<T> * temp = theNode->right;
+			delete theNode;
+			theNode = NULL;
+			return temp;
+		}
+		else if (theNode->right == NULL)
+		{
+			NodeType<T> * temp = theNode->left;
+			delete theNode;
+			theNode = NULL;
+			return temp;
+		}
+		NodeType<T> * temp = theNode->right;
+		while (temp->left != NULL)
+			temp = temp->left;
+		theNode->key = temp->key;
+		theNode->right = deleteTheNode(theNode->right, temp->key);
+	} // if
+	return theNode;
+} // deleteTheNode
 
 /**
  * This method assumes the node exists and this isnt full comments
  */
 template<class T>
 NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
-{/*
-	NodeType<T> *temp = root;
-	if (item == root->key)
-	{	
-		//return NULL;
-	}
-	int found = 0;
-	while (!found)
-	{
-		if (item > temp->key)
-		{
-			if (temp->right->key == item)
-			{
-				return *temp;
-			}
-			temp = temp->right;
-		} // if
-		if (item < temp->key)
-		{
-			if (temp->left->key == item)
-			{
-				return *temp;
-			} 
-			temp = temp->left;
-		} // if
-		if (temp == NULL)
-		{
-			found = 1;
-			// something is wrong this is here to prevent potential infinite loops
-		} // if
-	} // while*/
-	// not sure pushing bad message return NULL;
+{
 	NodeType<T> *blank = NULL;
 	if (current == NULL)
 		return *blank;
