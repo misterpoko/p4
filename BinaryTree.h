@@ -21,12 +21,12 @@ class BinaryTree
     
     void getNumSingleParent();
     void getNumSingleParentHelper(NodeType<T> *root);
-    
+  
     void getNumLeafNodes();
     void getNumLeafNodesHelper(NodeType<T> *root);
     
-    void getSumOfSubtreesHelper(NodeType<T> *root,T &item,bool &present);
     void getSumOfSubtrees(T &item);
+    void getSumOfSubtreesHelper(NodeType<T> *root,T &item,bool &present);
 
 	  NodeType<T> getP(NodeType<T> *current,T &key);
   

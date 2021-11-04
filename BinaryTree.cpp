@@ -240,7 +240,7 @@ NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
 	if ((current->right != NULL && current->right->key == item) || (current->left != NULL && current->left->key == item))
 	{
 		return *current;
-	}
+	} //if
 	else
 	{
 		if (item > current->key)
@@ -259,11 +259,28 @@ void uo()
 {
 	write(1,"error", 6);
 }
-	
+
+template<class T>
+void retrieveHelper(NodeType<T> *root, T &item, bool &found)
+{
+   if( root == NULL )
+   {
+     return; 
+   }// if
+   else if( root->key == item )
+   {
+     found = true;
+     return;
+   }// else if
+   retrieveHelper(root->left,item, found); 
+   retrieveHelper(root->right,item, found);
+}
+ 
 template<class T>
 void BinaryTree<T>::retrieve(T &item, bool &found) const
 {
-	NodeType<T> * temp = root;
+  retrieveHelper(root, item, found);
+	/*NodeType<T> * temp = root;
 	int beenFound = 0;
 	while (!beenFound)
 	{
@@ -271,7 +288,7 @@ void BinaryTree<T>::retrieve(T &item, bool &found) const
 		{
 			found = false;
 			beenFound = 1;
-		} 
+		} //if
 		if (item > temp->key)
 		{
 			temp = temp->right;
@@ -285,7 +302,8 @@ void BinaryTree<T>::retrieve(T &item, bool &found) const
 			found = true;
 			beenFound = 1;
 		} // if
-	} // while
+	} // while*/
+   
 }// retrieve
 
 template<class T>

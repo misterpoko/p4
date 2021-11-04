@@ -9,13 +9,14 @@
 using namespace std;
 int main(int argc, char *argv[]) 
 {
-	string userSelect; 
-	char userSelectChar,listType;
+	string userSelect;
+  string subLine; 
 	bool exit = false;
-	string subLine;
+  bool check = true;
+  bool found = false;
 	int valueOfInt;
 	float valueOfFloat;
-	bool check = true;
+ 	char userSelectChar,listType;
 	char caseI = 'i';
 	char caseF = 'f';
 	char caseS = 's';
@@ -157,7 +158,6 @@ int main(int argc, char *argv[])
 				}//else
 				break;
 			case 'r': // Retrieve retrieve
-        bool found;
         cout<< "Item to be retrieved: ";
 				cin >> userSelect; 
 				if(caseI == listType)
