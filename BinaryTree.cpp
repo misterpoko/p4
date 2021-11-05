@@ -624,14 +624,14 @@ void subTreeAddtions(NodeType<T> *root,T &sumOfSubTrees)
  * @param present whether or not the item is present in the tree -----------------------------------i think
  */
 template<class T>
-void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
+T BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
 {
    T sumOfSubTrees;
    if( root == NULL )
    {
-     return; 
+     return 0; 
    }// if
-   if( root->left != NULL && root->right != NULL && root->key == item )
+   /*if( root->left != NULL && root->right != NULL && root->key == item )
    {
      sumOfSubTrees = root->left->key +  root->right->key;
      cout << "Sum of Subtrees: " << sumOfSubTrees << endl;
@@ -655,7 +655,8 @@ void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &pres
      present = true;
    }//if
    getSumOfSubtreesHelper(root->left, item, present); 
-   getSumOfSubtreesHelper(root->right, item, present);
+   getSumOfSubtreesHelper(root->right, item, present);*/
+	return root->key + getSumOfSubtreesHelper(root->left, item, present) + getSumOfSubtreesHelper(root->right, item, present);
 } //getSumOfSubtreesHelper
 
 /**
@@ -665,8 +666,23 @@ template<class T>
 void BinaryTree<T>::getSumOfSubtrees(T &item)
 {
   bool present = false;
-	getSumOfSubtreesHelper(root, item, present); 
-  if ( present == false)
+	NodeType<T>* findValue = root;
+	while (1)
+	{
+		if (item > findValue->key)
+			findValue = findValue->right;
+		if (item < findValue->key)
+			findValue = findValue->left;
+		if (findValue == NULL || findValue->key == item)
+			break;
+	
+	} // while
+	if (findValue != NULL)
+	{
+		T var = getSumOfSubtreesHelper(findValue, item, present);
+		cout << "Sum of SubTrees: " << var << endl;
+	} 
+	else
   {
     cout << "Item no present or isnt a subtree" << endl; 
   } // if
