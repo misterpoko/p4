@@ -125,187 +125,6 @@ void BinaryTree<T>::getPredecessor(NodeType<T> *root, T &data)
 	
 }
 
-/*template<class T>
-NodeType<T>* BinaryTree<T>::DeleteNode(NodeType<T> *root, T &key)
-{
-	T data;
-	NodeType<T> *tempPtr;
-	tempPtr = root;
-	if(root->left == NULL)
-	{
-		root = root->left;
-		delete(tempPtr);
-		tempPtr = NULL;
-	}
-	else if(root->right == NULL)
-	{
-		root = root->right; 
-		delete(tempPtr);
-		tempPtr = NULL;
-	}
-	else
-	{
-		getPredecessor(root->left, data);\
-		root->key = data;
-		deleteHelper(root->left, data);
-	}
-}*/
-
-//delete helper probably doesnt need comments
-template<class T>
-void BinaryTree<T>::deleteHelper(NodeType<T> *root, T &key)
-{
-/*	if(key<root->key)
-	{
-		deleteHelper(root->left, key);
-	}
-	else if(key>root->key)
-	{
-		deleteHelper(root->right, key);
-	}
-	else //Node found
-	{
-		cout << "Found" << endl;
-		DeleteNode(root, key);
-	}*/
-/*
-	if (theNode == NULL)
-		return theNode;
-	if (key < theNode->key)
-		theNode->left = deleteNode(theNode->left,key);
-	else if (key > theNode->key)
-		theNode->right = deleteNode(theNode->right,key);
-	else
-	{
-		if (theNode->left == NULL && theNode->right == NULL)
-			return NULL;
-		else if (theNode->left == NULL)
-		{
-			NodeType<T> * temp = theNode->right;
-			delete theNode;
-			return temp;
-		}
-		else if (theNode->right == NULL)
-		{
-			NodeType<T> * temp = theNode->left;
-			delete theNode;
-			return temp;
-		}
-		NodeType<T> * temp = theNode->right;
-		while (temp->left != NULL)
-			temp = temp->left;
-		theNode->key = temp->key;
-		theNode->right = deleteTheNode(theNode->right, temp->key);
-	} // if
-	return theNode;*/
-}
-
-
-/*template<class T>
-void BinaryTree<T>::deleteItem(T &key)
-{
-	//deleteHelper(root,key);
-	NodeType<T> * exists = root;
-	while (exists != NULL)
-	{
-		if (exists->key == key)
-			break;
-		else if (key > exists->key)
-			exists = exists->right;
-		else if (key < exists->key)
-			exists = exists->left;
-	} // if
-	if (exists == NULL)
-	{
-		cout << "dne" << endl;
-		return;
-	} // if
-//	bool retrievable = false;
-	retrieve(key, retrievable);
-	if (retrievable)
-	{
-		deleteHelper(root,key);
-		return;
-	} // if
-//	cout << "dne" << endl;
-	if (key == root->key)
-	{
-		NodeType<T> *temp = root;
-		if (temp->right != NULL)
-		{
-			temp = temp->right;
-		//	NodeType<T> *tempP = temp;
-			while (temp->left != NULL)
-			{
-		//		if (temp->left->left == NULL)
-		//			tempP = temp;
-				temp = temp->left;
-			} // while
-			root->key = temp->key;
-		//	tempP->left = NULL;
-			delete temp;
-			temp = NULL;
-		}
-		else
-		{
-			root = root-> left;
-			delete temp;
-			temp = NULL;
-		} // if
-		return;
-	} // if
-	NodeType<T> * tbd = root;
-	NodeType<T> * tbdS = root;
-	NodeType<T> * tbdP = root;
-	while (tbd->key != key)
-	{
-		if (key > tbd->key)
-			tbd = tbd->right;
-		else if (key < tbd->key)
-			tbd = tbd->left;
-		if (tbd->right != NULL && tbd->right->key == key)
-				tbdP = tbd;
-		else if (tbd->left != NULL && tbd->left->key == key)
-				tbdP = tbd;
-	} // while
-	if (tbd->right == NULL && tbd->right == NULL)
-	{
-		if (tbdP->right == tbd)
-			tbdP->right = NULL;
-		else if (tbdP->left == tbd)
-			tbdP->left = NULL;
-		delete tbd;
-		tbd = NULL;
-	}
-	else if (tbd->right != NULL && tbd->left != NULL)
-	{
-		tbdS = tbd->right;
-		while (tbdS->left != NULL)
-			tbdS = tbdS->left;
-		tbd->key = tbdS->key;
-		delete tbdS;
-		tbdS = NULL;
-	}
-	else
-	{
-		if (tbd->right == NULL)
-		{
-			if (tbdP->right == tbd)
-				tbdP->right = tbd->left;
-			else
-				tbdP->left = tbd->left;
-		}
-		else
-		{
-			if (tbdP->right == tbd)
-				tbdP->right = tbd->right;
-			else
-				tbdP->left = tbd->right;
-		} // if
-		delete tbd;
-		tbd = nullptr;
-	} // if
-} // deleteItem */
 /**
  * This is a method that calls the method to delete an item given that it exists.
  * @param key the value of a node to delete.
@@ -624,14 +443,14 @@ void subTreeAddtions(NodeType<T> *root,T &sumOfSubTrees)
  * @param present whether or not the item is present in the tree -----------------------------------i think
  */
 template<class T>
-T BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
+void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
 {
    T sumOfSubTrees;
    if( root == NULL )
    {
-     return 0; 
+     return; 
    }// if
-   /*if( root->left != NULL && root->right != NULL && root->key == item )
+   if( root->left != NULL && root->right != NULL && root->key == item )
    {
      sumOfSubTrees = root->left->key +  root->right->key;
      cout << "Sum of Subtrees: " << sumOfSubTrees << endl;
@@ -655,8 +474,7 @@ T BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present
      present = true;
    }//if
    getSumOfSubtreesHelper(root->left, item, present); 
-   getSumOfSubtreesHelper(root->right, item, present);*/
-	return root->key + getSumOfSubtreesHelper(root->left, item, present) + getSumOfSubtreesHelper(root->right, item, present);
+   getSumOfSubtreesHelper(root->right, item, present);
 } //getSumOfSubtreesHelper
 
 /**
@@ -666,23 +484,8 @@ template<class T>
 void BinaryTree<T>::getSumOfSubtrees(T &item)
 {
   bool present = false;
-	NodeType<T>* findValue = root;
-	while (findValue != NULL)
-	{
-		if (item > findValue->key)
-			findValue = findValue->right;
-		else if (item < findValue->key)
-			findValue = findValue->left;
-		else if(findValue->key == item)
-			break;
-	
-	} // while
-	if (findValue != NULL)
-	{
-		T var = getSumOfSubtreesHelper(findValue->right, item, present) + getSumOfSubtreesHelper(findValue->left, item, present);
-		cout << "Sum of SubTrees: " << var << endl;
-	} 
-	else
+	getSumOfSubtreesHelper(root, item, present); 
+  if ( present == false)
   {
     cout << "Item no present or isnt a subtree" << endl; 
   } // if

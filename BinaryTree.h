@@ -26,7 +26,7 @@ class BinaryTree
     void getNumLeafNodesHelper(NodeType<T> *root);
     
     void getSumOfSubtrees(T &item);
-    T getSumOfSubtreesHelper(NodeType<T> *root,T &item,bool &present);
+    void getSumOfSubtreesHelper(NodeType<T> *root,T &item,bool &present);
 
 	  NodeType<T> getP(NodeType<T> *current,T &key);
   
@@ -41,9 +41,8 @@ class BinaryTree
     // Delete Helpers
     void DeleteNode(NodeType<T> *root, T &key);
     void getPredecessor(NodeType<T> *root, T &data);
-    void deleteHelper(NodeType<T> *root, T &key);
-	void destroy(NodeType<T> *node);
-	NodeType<T> * deleteTheNode(NodeType<T> * theNode, T &key);
+	  void destroy(NodeType<T> *node);
+	  NodeType<T> * deleteTheNode(NodeType<T> * theNode, T &key);
 
   private:
     NodeType<T> *root;
