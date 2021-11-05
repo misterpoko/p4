@@ -4,7 +4,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
+/**
+ * This is the class constructor assigining appropriate values to an empty
+ * binary search tree.
+ */
 template<class T>
 BinaryTree<T>::BinaryTree()
 {
@@ -13,15 +16,22 @@ BinaryTree<T>::BinaryTree()
   numberOfParents = 0;
   numberOfLeafs = 0; 
   first = true;
-}
+} // BinaryTree
 
+/**
+ * This is a class destructor which uses the destroy method to deallocate any dynamically used objects
+ */
 template<class T>
 BinaryTree<T>::~BinaryTree()
 {
 	destroy(root);
 	root = NULL;
-}
+} // ~BinaryTree
 
+/**
+ * This is a method meant to deconstruct the binary tree. It is recursive destroying all nodes from bottom to top right to left.
+ * @param node is the root node or where it starts the destruction.
+ */
 template<class T>
 void BinaryTree<T>::destroy (NodeType<T> *node)
 {
@@ -36,9 +46,16 @@ void BinaryTree<T>::destroy (NodeType<T> *node)
 	} // if
 } // if
 
+/**
+ * This is the actual insert method but it takes in different parameters.
+ * @param key the item value being put into a tree.
+ * @param current the node that is being used as a basepoint to insert somewhere
+ * @param previous the node that is the parent of current.
+ */ 
 template<class T>
 void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previous)
 {
+	// inserting first object
 	if (root == NULL)
     {
         NodeType<T> * inserted = new NodeType<T>;
@@ -49,11 +66,12 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
         length++;
         return;
     }
+	//inserting general objects
     if (current == NULL)
     {
         NodeType<T> * inserted = new NodeType<T>;
         inserted->key = key;
-	      inserted->right = NULL;
+	inserted->right = NULL;
         inserted->left = NULL;
         if (key > previous->key)
         {
@@ -69,6 +87,7 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
         }
         return;
     }
+	// finding the node where it will be inserted and detecting if a duplicate
     if (key > current->key)
     {
         insertPt2(key, current->right, current);
@@ -81,15 +100,20 @@ void BinaryTree<T>::insertPt2(T &key, NodeType<T> *current, NodeType<T> *previou
     {
         cout << "Item already in tree." << endl;
     }
-}
+} // insertPt2
 
+/**
+ * This is the method that calls the real insert method.
+ * It inserts an item into a binary Search Tree
+ * @param key the value that we want to insert into the tree.
+ */
 template<class T>
 void BinaryTree<T>::insert(T &key)
 {
 	insertPt2(key, root, NULL);
 } // insert
 
-
+//delete helper probably will get deleted.
 template<class T>
 void BinaryTree<T>::getPredecessor(NodeType<T> *root, T &data)
 {	
@@ -127,7 +151,7 @@ NodeType<T>* BinaryTree<T>::DeleteNode(NodeType<T> *root, T &key)
 	}
 }*/
 
-
+//delete helper probably doesnt need comments
 template<class T>
 void BinaryTree<T>::deleteHelper(NodeType<T> *root, T &key)
 {
@@ -282,25 +306,43 @@ void BinaryTree<T>::deleteItem(T &key)
 		tbd = nullptr;
 	} // if
 } // deleteItem */
+/**
+ * This is a method that calls the method to delete an item given that it exists.
+ * @param key the value of a node to delete.
+ */
 template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
 	deleteTheNode(root, key);
 } // deleteItem
 
+/**
+ * This method deletes a node from the binary tree.
+ * @param theNode cycles through nodes on the tree until it finds the one to delete
+ * @param key the value of the node that you want to delete
+ * @return NodeType<T>* used to recursively find the node to delete.
+ */
 template<class T>
 NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 {
+	//base case of not existing
 	if (theNode == NULL)
+	{
+		cout << "dne" << endl;
 		return theNode;
+	} // if
+	// find the node to actually delete
 	if (key < theNode->key)
 		theNode->left = deleteTheNode(theNode->left,key);
 	else if (key > theNode->key)
 		theNode->right = deleteTheNode(theNode->right,key);
 	else
 	{
+		//deleting the node
+		//this is deletion of a leaf
 		if (theNode->left == NULL && theNode->right == NULL)
 			return NULL;
+		//this is deletion of only having one child 
 		else if (theNode->left == NULL)
 		{
 			NodeType<T> * temp = theNode->right;
@@ -315,6 +357,8 @@ NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 			theNode = NULL;
 			return temp;
 		}
+		//deletion of having two children by finding immediate right
+		//taking its value then deleting immediate right node.
 		NodeType<T> * temp = theNode->right;
 		while (temp->left != NULL)
 			temp = temp->left;
@@ -327,6 +371,7 @@ NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 /**
  * This method assumes the node exists and this isnt full comments
  */
+// im not sure we need this anymore
 template<class T>
 NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
 {
@@ -351,57 +396,53 @@ NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
 	return *blank;
 } // getP
 
+//debugger but we dont need
 void uo()
 {
 	write(1,"error", 6);
 }
 
+/**
+ * This is the actual retrieve function but takes in different parameters
+ * @param root recursive way of finding the node existance
+ * @param item item's value trying to be found
+ * @param found how to check if the item has been found
+ */
 template<class T>
 void retrieveHelper(NodeType<T> *root, T &item, bool &found)
 {
+	// case doesnt exist
    if( root == NULL )
    {
      return; 
    }// if
+	// case does exists
    else if( root->key == item )
    {
      found = true;
      return;
    }// else if
+	//recursively find if exists
    retrieveHelper(root->left,item, found); 
    retrieveHelper(root->right,item, found);
 }
  
+/**
+ * This is the retrieve method which takes in a boolean and sees if an item exists
+ * in the binary search tree.
+ * @param item wanting to be found
+ * @param found whether or not it has been found
+ */
 template<class T>
 void BinaryTree<T>::retrieve(T &item, bool &found) const
 {
   retrieveHelper(root, item, found);
-	/*NodeType<T> * temp = root;
-	int beenFound = 0;
-	while (!beenFound)
-	{
-    if (temp == NULL)
-		{
-			found = false;
-			beenFound = 1;
-		} //if
-		if (item > temp->key)
-		{
-			temp = temp->right;
-		} //if
-		if (item < temp->key)
-		{
-			temp = temp->left;
-		} // if
-		if (item == temp->key)
-		{
-			found = true;
-			beenFound = 1;
-		} // if
-	} // while*/
-   
 }// retrieve
 
+/**
+ * Recursive way of printing Binary search tree in a preorder fashion.
+ * @param root where it starts the preOrderPrint.
+ */
 template<class T>
 void  BinaryTree<T>::preOrderPrint(NodeType<T> *root) const
 {
@@ -412,12 +453,20 @@ void  BinaryTree<T>::preOrderPrint(NodeType<T> *root) const
 		preOrderPrint(root->right);
 	} //if
 } // preOrderPrint
+
+/**
+ * This is the caller of preOrderPrint which takes in no parameters to call the function.
+ */
 template<class T>
 void BinaryTree<T>::preOrder() const
 {
 	preOrderPrint(root);
 } // preOrder
 
+/**
+ * Recursive way of printing Binary search tree in a inorder fashion.
+ * @param root where it starts the inOrderPrint.
+ */
 template<class T>
 void BinaryTree<T>::inOrderPrint(NodeType<T> *root) const
 {
@@ -429,12 +478,19 @@ void BinaryTree<T>::inOrderPrint(NodeType<T> *root) const
 	} //if
 }// inOrderPrint
 
+/**
+ * This is the caller of inOrderPrint which takes in no parameters to call the function.
+ */
 template<class T>
 void BinaryTree<T>::inOrder() const
 {
 	inOrderPrint(root);
 } // inOrder
 
+/**
+ * Recursive way of printing Binary search tree in a postorder fashion.
+ * @param root where it starts the postOrderPrint.
+ */
 template<class T>
 void BinaryTree<T>::postOrderPrint(NodeType<T> *root) const
 {
@@ -445,18 +501,29 @@ void BinaryTree<T>::postOrderPrint(NodeType<T> *root) const
 		cout << root->key << " ";
 	} //if
 } // postOrderPrint
+
+/**
+ * This is the caller of PostOrderPrint which takes in no parameters to call the function.
+ */
 template<class T>
 void BinaryTree<T>::postOrder() const
 {
 	postOrderPrint(root);
 } // postOrder
 
+/**
+ * This returns the length of the binary search tree or the amount of nodes in it.
+ */
 template<class T>
 int BinaryTree<T>::getLength() const
 {
   return length;
 } //getLength
 
+/**
+ * This method calls the getNumSingleParentHelper and displays the number of single parents
+ * it discards the value after in case the amount has changed.
+ */
 template<class T>
 void BinaryTree<T>::getNumSingleParent()
 {
@@ -465,6 +532,10 @@ void BinaryTree<T>::getNumSingleParent()
   numberOfParents = 0;
 } //getNumSingleParent
 
+/**
+ * This is a recursive method that gets the number of single parents in the tree.
+ * @param root the place it starts from a recursive standpoint.
+ */
 template<class T>
 void BinaryTree<T>::getNumSingleParentHelper(NodeType<T> *root)
 {
@@ -480,6 +551,10 @@ void BinaryTree<T>::getNumSingleParentHelper(NodeType<T> *root)
   getNumSingleParentHelper(root->right);
 } // getNumSingleParentHelper
 
+/**
+ * This gets the number of leafs in the tree recursively.
+ * @param root the place where it starts from a recursive standpoint.
+ */
 template<class T>
 void BinaryTree<T>::getNumLeafNodesHelper(NodeType<T> *root)
 {
@@ -495,7 +570,10 @@ void BinaryTree<T>::getNumLeafNodesHelper(NodeType<T> *root)
   getNumLeafNodesHelper(root->right);
 } //getNumLeafNodesHelper
 
-
+/**
+ * This is the method that calls getNumLeafNodesHelper to count the number of leaf nodes.
+ * It resets its count after calling the method in case the tree changes.
+ */
 template<class T>
 void BinaryTree<T>::getNumLeafNodes()
 {
@@ -530,6 +608,12 @@ void subTreeAddtions(NodeType<T> *root,T &sumOfSubTrees)
    subTreeAddtions(root->right, sumOfSubTrees);
 }*/
 
+/**
+ * This is a method that gets the sum of subtrees.
+ * @param root where it starts from a recursive standpoint
+ * @param item -------------------------------------------------------------------------------------not sure fix this comment and make inlines for this method
+ * @param present whether or not the item is present in the tree -----------------------------------i think
+ */
 template<class T>
 void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &present )
 {
@@ -565,6 +649,9 @@ void BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item, bool &pres
    getSumOfSubtreesHelper(root->right, item, present);
 } //getSumOfSubtreesHelper
 
+/**
+ * This method callse the getSumofsubtreeshelper. It initializes the data needed for it and detects a no subtree case
+ */
 template<class T>
 void BinaryTree<T>::getSumOfSubtrees(T &item)
 {
