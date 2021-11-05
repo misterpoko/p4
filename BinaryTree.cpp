@@ -341,13 +341,17 @@ NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 		//deleting the node
 		//this is deletion of a leaf
 		if (theNode->left == NULL && theNode->right == NULL)
+		{
+			length--;
 			return NULL;
+		} // if
 		//this is deletion of only having one child 
 		else if (theNode->left == NULL)
 		{
 			NodeType<T> * temp = theNode->right;
 			delete theNode;
 			theNode = NULL;
+			length--;
 			return temp;
 		}
 		else if (theNode->right == NULL)
@@ -355,13 +359,14 @@ NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 			NodeType<T> * temp = theNode->left;
 			delete theNode;
 			theNode = NULL;
+			length--;
 			return temp;
 		}
 		//deletion of having two children by finding immediate right
 		//taking its value then deleting immediate right node.
 		NodeType<T> * temp = theNode->right;
 		while (temp->left != NULL)
-			temp = temp->left;
+		temp = temp->left;
 		theNode->key = temp->key;
 		theNode->right = deleteTheNode(theNode->right, temp->key);
 	} // if
