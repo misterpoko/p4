@@ -26,7 +26,7 @@ class BinaryTree
     void getNumLeafNodesHelper(NodeType<T> *root);
     
     void getSumOfSubtrees(T &item);
-    void getSumOfSubtreesHelper(NodeType<T> *root,T &item,bool &present);
+    T getSumOfSubtreesHelper(NodeType<T> *root,T &item);
 
 	  NodeType<T> getP(NodeType<T> *current,T &key);
   
