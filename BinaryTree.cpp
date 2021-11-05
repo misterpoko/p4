@@ -667,13 +667,13 @@ void BinaryTree<T>::getSumOfSubtrees(T &item)
 {
   bool present = false;
 	NodeType<T>* findValue = root;
-	while (1)
+	while (findValue != NULL)
 	{
 		if (item > findValue->key)
 			findValue = findValue->right;
-		if (item < findValue->key)
+		else if (item < findValue->key)
 			findValue = findValue->left;
-		if (findValue == NULL || findValue->key == item)
+		else if(findValue->key == item)
 			break;
 	
 	} // while
