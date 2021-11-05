@@ -313,7 +313,11 @@ void BinaryTree<T>::deleteItem(T &key)
 template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
+	cout << "Item to delete: " << key << endl;
 	deleteTheNode(root, key);
+	cout << "In-Order: ";
+	inOrder();
+	cout << endl << endl;
 } // deleteItem
 
 /**
@@ -328,7 +332,7 @@ NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 	//base case of not existing
 	if (theNode == NULL)
 	{
-		cout << "dne" << endl;
+		cout << "Item not in tree" << endl;
 		return theNode;
 	} // if
 	// find the node to actually delete
