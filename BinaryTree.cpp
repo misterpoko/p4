@@ -679,7 +679,7 @@ void BinaryTree<T>::getSumOfSubtrees(T &item)
 	} // while
 	if (findValue != NULL)
 	{
-		T var = getSumOfSubtreesHelper(findValue, item, present);
+		T var = getSumOfSubtreesHelper(findValue->right, item, present) + getSumOfSubtreesHelper(findValue->left, item, present);
 		cout << "Sum of SubTrees: " << var << endl;
 	} 
 	else
