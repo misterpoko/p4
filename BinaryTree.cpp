@@ -33,7 +33,7 @@ BinaryTree<T>::~BinaryTree()
  * @param node is the root node or where it starts the destruction.
  */
 template<class T>
-void BinaryTree<T>::destroy (NodeType<T> *node)
+void BinaryTree<T>::destroy(NodeType<T> *node)
 {
 	if (node != NULL)
 	{
@@ -113,18 +113,6 @@ void BinaryTree<T>::insert(T &key)
 	insertPt2(key, root, NULL);
 } // insert
 
-//delete helper probably will get deleted.
-template<class T>
-void BinaryTree<T>::getPredecessor(NodeType<T> *root, T &data)
-{	
-	while(root->right != NULL)
-	{
-		root = root->right;
-	}
-	data = root->key;
-	
-}
-
 /**
  * This is a method that calls the method to delete an item given that it exists.
  * @param key the value of a node to delete.
@@ -139,7 +127,8 @@ void BinaryTree<T>::deleteItem(T &key)
 } // deleteItem
 
 /**
- * This method deletes a node from the binary tree.
+ * This method deletes a node from the binary tree. If the node has two children it replaces itself with the
+ * value of the node to the immediate right or its successor. Then you delete the successor node.
  * @param theNode cycles through nodes on the tree until it finds the one to delete
  * @param key the value of the node that you want to delete
  * @return NodeType<T>* used to recursively find the node to delete.
@@ -194,40 +183,6 @@ NodeType<T> * BinaryTree<T>::deleteTheNode(NodeType<T> *theNode, T &key)
 	} // if
 	return theNode;
 } // deleteTheNode
-
-/**
- * This method assumes the node exists and this isnt full comments
- */
-// im not sure we need this anymore
-template<class T>
-NodeType<T> BinaryTree<T>::getP(NodeType<T> *current,T &item)
-{
-	NodeType<T> *blank = NULL;
-	if (current == NULL)
-		return *blank;
-	if ((current->right != NULL && current->right->key == item) || (current->left != NULL && current->left->key == item))
-	{
-		return *current;
-	} //if
-	else
-	{
-		if (item > current->key)
-		{
-			return getP(current->right, item);
-		} // if
-		if (item < current->key)
-		{
-			return getP(current->left, item);
-		} // if
-	} // if
-	return *blank;
-} // getP
-
-//debugger but we dont need
-void uo()
-{
-	write(1,"error", 6);
-}
 
 /**
  * This is the actual retrieve function but takes in different parameters
@@ -412,8 +367,7 @@ void BinaryTree<T>::getNumLeafNodes()
 /**
  * This is a method that gets the sum of subtrees.
  * @param root where it starts from a recursive standpoint
- * @param item -------------------------------------------------------------------------------------not sure fix this comment and make inlines for this method
- * @param present whether or not the item is present in the tree -----------------------------------i think
+ * @param item the item it needs to find where to start the recursion
  */
 template<class T>
 T BinaryTree<T>::getSumOfSubtreesHelper(NodeType<T> *root,T &item )
