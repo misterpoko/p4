@@ -450,7 +450,7 @@ void BinaryTree<T>::getSumOfSubtrees(T &item)
 	} 
 	else
   {
-    cout << "Item no present or isnt a subtree" << endl; 
+    cout << "Item not in tree" << endl; 
   } // if
 } //getSumOfSubtrees
 
