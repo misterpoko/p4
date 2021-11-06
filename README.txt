@@ -35,7 +35,6 @@ postorder
 getlength
 getNumSingleParents
 getNumLeafNodes
-getSumofSubtrees
 main.cpp
 general bugfixing
 
@@ -46,7 +45,9 @@ delete
 insert
 destructor
 general bugfixing
-memleaks
+getSumOfSubtrees
+major memleaks
+comments
 
 ------------------------------------------------------
 Complexity
