@@ -132,7 +132,6 @@ void BinaryTree<T>::getPredecessor(NodeType<T> *root, T &data)
 template<class T>
 void BinaryTree<T>::deleteItem(T &key)
 {
-	cout << "Item to delete: " << key << endl;
 	deleteTheNode(root, key);
 	cout << "In-Order: ";
 	inOrder();
