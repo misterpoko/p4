@@ -22,13 +22,10 @@ class BinaryTree
     void getNumLeafNodesHelper(NodeType<T> *root);
     void getSumOfSubtrees(T &item);
     T getSumOfSubtreesHelper(NodeType<T> *root,T &item);
-	  NodeType<T> getP(NodeType<T> *current,T &key);
     void insertPt2(T &key, NodeType<T> *current, NodeType<T> *previous);
     void preOrderPrint(NodeType<T> *root) const;
     void inOrderPrint(NodeType<T> *root) const;
     void postOrderPrint(NodeType<T> *root) const;
-    void DeleteNode(NodeType<T> *root, T &key);
-    void getPredecessor(NodeType<T> *root, T &data);
 	  void destroy(NodeType<T> *node);
 	  NodeType<T> * deleteTheNode(NodeType<T> * theNode, T &key);
 
