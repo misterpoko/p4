@@ -52,7 +52,7 @@ memleaks
 Complexity
 
 Time Complexity
-T(n) = 2T(n-1)-1
+T(n) = 2T(n-1)+1
 Big O Notation
 O(n^2)
 
@@ -73,7 +73,7 @@ void getNumSingleParentHelper(NodeType<T> *root)
 ------------------------------------------------------
 
 Time Complexity
-T(n) = 2T(n-1)-1
+T(n) = 2T(n-1)+1
 Big O Notation
 O(n^2)
 
@@ -94,9 +94,9 @@ void getNumLeafNodesHelper(root)
 ------------------------------------------------------
 
 Time Complexity
-T(n) = 4T(n-1)-1
+T(n) = 2T(n-1) + 1 + f(n)
 Big O Notation
-O(n^4)
+O(n^2 + n) --> O(n^2)
 
 
 T getSumOfSubtreesHelper(root,T &item )
@@ -113,18 +113,18 @@ T getSumOfSubtreesHelper(root,T &item )
 void getSumOfSubtrees(T &item)
 {
   NodeType<T>* findValue = root;
-	while (findValue is not NULL)  O(1)
+	while (findValue is not NULL)  O(n)
 	{
-		if (item > findValue key)
-			findValue = findValue right;
-		else if (item < findValue key)
+		if (item > findValue key)               O(1)
+			findValue = findValue right;    
+		else if (item < findValue key)          O(1)
 			findValue = findValue left;
-		else if(findValue key is item)
+		else if(findValue key is item)          O(1)
 			break;
 	}
 	if (findValue is not NULL)    O(1)
 	{
-		T var = getSumOfSubtreesHelper(findValue right, item) + getSumOfSubtreesHelper(findValue left, item);  O(n-1) + O(n-1) + O(1) 
+		T var = getSumOfSubtreesHelper(findValue right, item) + getSumOfSubtreesHelper(findValue left, item);  O(n-1) + O(n-1) + O(1) (but calls the prievious method)
 		cout << "Sum of SubTrees: " << var << endl;
 	} 
 	else
