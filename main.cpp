@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 					listy.retrieve(valueOfInt, found);
           if(found == true)
           {
-            cout << "Item in tree" << endl; 
+            cout << "Item found in tree" << endl; 
           }
           else 
           {
